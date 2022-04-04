@@ -24,14 +24,16 @@ public class Enemy : MonoBehaviour
     public Vector3 changeVec = Vector3.zero;
     public float speed;
     public int power;
+    public int score;
 
     public bool isBoss;
 
     [SerializeField] protected GameObject bullet;
 
     protected Player player => Player.Instance;
+    GameManager gameManager => GameManager.Instance;
     Animator anim;
-    Collider2D col;
+    protected Collider2D col;
 
     protected virtual void Awake()
     {
@@ -63,7 +65,7 @@ public class Enemy : MonoBehaviour
     public virtual void Dead()
     {
         col.enabled = false;
-        //플레이어한테 점수 더하기
+        gameManager.enemyScore += score;
         anim.SetTrigger("isDead");
     }
 

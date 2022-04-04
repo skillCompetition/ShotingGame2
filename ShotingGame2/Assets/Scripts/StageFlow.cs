@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StageFlow : Singleton<StageFlow>
 {
     SpawnData spawnData => SpawnData.Instance;
     UIController uIController => UIController.Instance;
+    GameManager gameManager => GameManager.Instance;
 
     public int stage = 1;
 
@@ -26,6 +28,7 @@ public class StageFlow : Singleton<StageFlow>
 
     void StartStage()
     {
+        gameManager.Init(stage);
         uIController.bossHPGaugeController(false);
         StageAnim(stage);
         uIController.ChangeBackground(stage);
@@ -34,10 +37,11 @@ public class StageFlow : Singleton<StageFlow>
 
     public void EndStage()
     {
+        gameManager.stageScore += (int)(gameManager.HP + (GameManager.MaxPain - gameManager.Pain));
         stage++;
         if(stage > 2)
         {
-            Debug.Log("∞‘¿” ≥°");
+            gameManager.GameClear();
         }
         else
         {

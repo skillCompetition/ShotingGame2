@@ -11,6 +11,8 @@ public class Boss : Enemy
     [SerializeField] GameObject[] enemies;
     [SerializeField] Transform[] poses;
 
+    public bool isMini;
+
     public enum BossType
     {
         Boss,
@@ -121,9 +123,9 @@ public class Boss : Enemy
     {
         int num;
         if (myBoss == BossType.Boss)
-            num = 2;
+            num = 1;
         else
-            num = 3;
+            num = 2;
 
         for (int i = 0; i < num; i++)
         {
@@ -176,6 +178,7 @@ public class Boss : Enemy
             yield return new WaitForSeconds(0.5f);
         }
 
+        yield return new WaitForSeconds(1f);
         ++attackIndex;
         ChooseAttack();
 
@@ -192,28 +195,11 @@ public class Boss : Enemy
                 continue;
 
             Vector2 vec = player.transform.position - b1[i].transform.position;
-
             float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
-
             b1[i].rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
         }
 
-
         b1.Clear();
-    }
-
-    public override void Dead()
-    {
-        if (TryGetComponent<MiniBoss>(out var mini))
-        {
-            Debug.Log("미니 보스 죽음");
-        }
-        else
-        {
-            uIController.bossHPGaugeController(false);
-            bossManager.ShowMiniBoss();
-        }
-        base.Dead();
     }
 
 }

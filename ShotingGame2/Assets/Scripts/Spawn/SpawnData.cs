@@ -11,9 +11,24 @@ public class SpawnData : Singleton<SpawnData>
 
     [Header("SpawnPos")]
     [SerializeField] Transform[] spawnPoses;
+    [SerializeField] Transform[] redPoses;
+    [SerializeField] Transform[] whitePoses;
 
     [Header("SpawnPrefabs")]
     [SerializeField] GameObject[] enemies;
+
+    [Header("Red")]
+    [SerializeField] GameObject redPrefab;
+    float redTimer = 0;
+    [SerializeField] float redDelay;
+    [SerializeField] int redRan;
+
+    [Header("White")]
+    [SerializeField] GameObject whitePrefab;
+    float whiteTimer = 0;
+    [SerializeField] float whiteDelay;
+    [SerializeField] int whiteRan;
+
     void Start()
     {
         
@@ -21,7 +36,12 @@ public class SpawnData : Singleton<SpawnData>
 
     void Update()
     {
-        
+        if (!bossManager.isBossesTime)
+        {
+            SpawnRedCheck();
+            SpawnWhiteCheck();
+        }
+
     }
 
     public void SpawnDataRead(int stage)
@@ -85,4 +105,45 @@ public class SpawnData : Singleton<SpawnData>
 
         return enemy;
     }
+
+
+    void SpawnRedCheck()
+    {
+        redTimer += Time.deltaTime;
+        if(redTimer >= redDelay)
+        {
+            if (Random.Range(0,redRan) == 0)
+            {
+                RedSpawn();
+            }
+            redTimer = 0;
+        }
+    }
+
+    void RedSpawn()
+    {
+        Transform t = redPoses[Random.Range(0, redPoses.Length)];
+        Instantiate(redPrefab,t.position,t.rotation);
+    }
+
+    void SpawnWhiteCheck()
+    {
+        whiteTimer += Time.deltaTime;
+        if (whiteTimer >= whiteDelay)
+        {
+            if (Random.Range(0, whiteRan) == 0)
+            {
+                WhiteSpawn();
+            }
+            whiteTimer = 0;
+        }
+    }
+
+    void WhiteSpawn()
+    {
+        Transform t = whitePoses[Random.Range(0, whitePoses.Length)];
+        Instantiate(whitePrefab, t.position, t.rotation);
+    }
+
+
 }

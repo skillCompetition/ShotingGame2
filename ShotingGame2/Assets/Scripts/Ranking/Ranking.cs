@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Ranking : MonoBehaviour
 {
+    GameManager gameManager => GameManager.Instance;
+
     List<Rank> rankingList => GameManager.Instance.rankingList;
 
     [Header("UI")]
@@ -15,7 +17,17 @@ public class Ranking : MonoBehaviour
 
     void Start()
     {
-        //inputPanel.SetActive(false);
+        inputPanel.SetActive(false);
+
+        if (rankingList.Count < 5 || rankingList[4].score <=  gameManager.totalscore)
+        {
+            inputPanel.SetActive(true);
+
+        }
+        else
+        {
+            RankingSet();
+        }
     }
 
     void Update()
@@ -23,10 +35,12 @@ public class Ranking : MonoBehaviour
         
     }
 
+
+
     public void InputBtnClick()
     {
         string name = input.text;
-        int score = 121;
+        int score = gameManager.totalscore;
 
         InputRank(name, score);
         inputPanel.SetActive(false);

@@ -22,6 +22,16 @@ public class UIController : Singleton<UIController>
     [SerializeField] SpriteRenderer background;
     [SerializeField] Sprite[] backes;
 
+    [Header("EndStage")]
+    [SerializeField] Image gameClearPanel;
+    Animator anim;
+
+    public override void Awake()
+    {
+        base.Awake();
+        anim = gameClearPanel.GetComponent<Animator>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +55,7 @@ public class UIController : Singleton<UIController>
 
     void CheckBossGauge()
     {
-        if (!bossManager.isBossTime)
+        if (!bossManager.isBossesTime)
             return;
 
         bossHPGaugeController(true);
@@ -68,6 +78,7 @@ public class UIController : Singleton<UIController>
     {
         if (bossManager.mini1 != null && bossManager.mini2 != null)
         {
+
             MiniBoss mini1 = bossManager.mini1.GetComponent<MiniBoss>();
             MiniBoss mini2 = bossManager.mini2.GetComponent<MiniBoss>();
 
@@ -103,5 +114,10 @@ public class UIController : Singleton<UIController>
     public void ChangeBackground(int stage)
     {
         background.sprite = backes[stage - 1];
+    }
+
+    public void ClearPanel()
+    {
+        anim.SetTrigger("isGameClear");
     }
 }

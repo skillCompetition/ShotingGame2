@@ -73,9 +73,9 @@ GameObject:
   - component: {fileID: 7819238549946596970}
   - component: {fileID: 7819238549946596975}
   - component: {fileID: 7819238549946596945}
-  - component: {fileID: 1018659646180225817}
+  - component: {fileID: -1017755144463046674}
   m_Layer: 0
-  m_Name: MiniBoss
+  m_Name: MiniBossPlus
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 2192450021786810173, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.048508644, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -204,7 +204,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1018659646180225817
+--- !u!114 &-1017755144463046674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,19 +216,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4383829bc5dc6b45ad0ddad04d65bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 200
   moveVec: {x: 0, y: 0, z: 0}
   changeVec: {x: 0, y: 0, z: 0}
   speed: 2
-  power: 10
-  score: 100
-  isBoss: 0
+  power: 8
+  score: 0
+  isBoss: 1
   bullet: {fileID: 9000432699619095249, guid: 39a491c30f8bfbd499b20a5d16fc7e7b, type: 3}
-  MaxHP: 100
+  MaxHP: 200
   enemies:
   - {fileID: 412598089163414943, guid: 13237ebd5b20b8c439293dc9d07f9e04, type: 3}
+  - {fileID: 5879821398273901894, guid: 4cc53c6f21b998549a30614b8e90a89f, type: 3}
+  - {fileID: 5601825915240739500, guid: 281743d9793adf548a81ab11a24ee27e, type: 3}
+  - {fileID: 6063773128401347674, guid: aebdcfa6eb6717f49b708030494c1e97, type: 3}
   poses:
   - {fileID: 7819238548364087517}
   - {fileID: 7819238548443455493}
   isMini: 1
-  myBoss: 0
+  myBoss: 1

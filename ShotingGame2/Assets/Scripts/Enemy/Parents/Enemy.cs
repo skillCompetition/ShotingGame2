@@ -11,7 +11,11 @@ public class Enemy : MonoBehaviour
         {
             hp = value;
             if (hp <= 0)
+            {
+                hp = 0;
                 Dead();
+            }
+
 
         }
     }

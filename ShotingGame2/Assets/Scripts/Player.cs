@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Singleton<Player>
 {
@@ -10,16 +11,19 @@ public class Player : Singleton<Player>
     [SerializeField] GameObject[] bullets;
     public int bulletLevel;
 
-    // Start is called before the first frame update
+    [Header("SuperShot")]
+    [SerializeField] GameObject superBullet;
+    public Slider slider;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         FireCheck();
+        SuperShotCheck();
     }
 
     void FixedUpdate()
@@ -55,7 +59,53 @@ public class Player : Singleton<Player>
     /// </summary>
     void Fire()
     {
-        Instantiate(bullets[bulletLevel], transform.position, transform.rotation);
-        fireTime = 0;
+        if (!issuperShot)
+        {
+            Instantiate(bullets[bulletLevel], transform.position, transform.rotation);
+            fireTime = 0;
+        }
+
     }
+
+    void SuperShotCheck()
+    {
+        if (Input.GetMouseButton(1) && slider.value >= 100)
+        {
+            StartCoroutine(SuperShotAttack());
+        }
+    }
+
+    public bool issuperShot;
+    IEnumerator SuperShotAttack()
+    {
+        float timer = 0f;
+        issuperShot = true;
+        while (true)
+        {
+            timer += Time.deltaTime;
+            slider.value -= 1;
+            Instantiate(superBullet, transform.position, transform.rotation);
+            if (timer >= 1f)
+               break;
+            yield return new WaitForEndOfFrame();
+        }
+
+        issuperShot = false; 
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            if(collision.gameObject.TryGetComponent<Bullet>(out var logic))
+            {
+                if(logic.myBullet == Bullet.BulletType.Enemy)
+                {
+                    slider.value += 10;
+                }
+            }
+        }
+    }
+
+
 }

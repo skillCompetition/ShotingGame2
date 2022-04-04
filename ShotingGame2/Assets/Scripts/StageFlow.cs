@@ -26,6 +26,7 @@ public class StageFlow : Singleton<StageFlow>
 
     void StartStage()
     {
+        uIController.bossHPGaugeController(false);
         StageAnim(stage);
         uIController.ChangeBackground(stage);
         spawnData.SpawnDataRead(stage);

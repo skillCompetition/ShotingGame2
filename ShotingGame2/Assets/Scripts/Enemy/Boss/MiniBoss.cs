@@ -14,13 +14,15 @@ public class MiniBoss : Boss
 
     public override void Dead()
     {
+        base.Dead();
+
         if (!bossManager.isLastMiniBoss)
             bossManager.isLastMiniBoss = true;
         else
         {
+            uIController.bossHPGaugeController(false);
             stageFlow.EndStage();
         }
 
-        base.Dead();
     }
 }

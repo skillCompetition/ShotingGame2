@@ -15,15 +15,22 @@ public class Player : Singleton<Player>
     [SerializeField] GameObject superBullet;
     public Slider slider;
 
+    [Header("Boom")]
+    public int boom;
+    [SerializeField] GameObject[] boomImg;
     void Start()
     {
-        
+        for (int i = 0; i < boomImg.Length; i++)
+        {
+            boomImg[i].SetActive(false);
+        }
     }
 
     void Update()
     {
         FireCheck();
         SuperShotCheck();
+        CheckBoom();
     }
 
     void FixedUpdate()
@@ -91,6 +98,27 @@ public class Player : Singleton<Player>
         }
 
         issuperShot = false; 
+    }
+
+    public void BoomPlus()
+    {
+        boom++;
+        boomImg[boom - 1].SetActive(true);
+    }
+
+
+    void CheckBoom()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            UseBoom();
+        }
+    }
+
+    public void UseBoom()
+    {
+        boomImg[boom - 1].SetActive(false);
+        boom--;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

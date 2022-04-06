@@ -31,6 +31,7 @@ public class Player : Singleton<Player>
         FireCheck();
         SuperShotCheck();
         CheckBoom();
+        WarpCheck();
     }
 
     void FixedUpdate()
@@ -119,6 +120,18 @@ public class Player : Singleton<Player>
     {
         boomImg[boom - 1].SetActive(false);
         boom--;
+    }
+
+    Vector3 mouseVec, transPos, targetPos;
+    void WarpCheck()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            mouseVec = Input.mousePosition;
+            transPos = Camera.main.ScreenToWorldPoint(mouseVec);
+            targetPos = new Vector3(transPos.x, transPos.y, 0);
+            transform.position = targetPos;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
